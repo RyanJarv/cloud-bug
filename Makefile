@@ -47,6 +47,11 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
+pycharm-boto3-stub-gen:
+	python -m pip install 'boto3_stubs[iam,ec2,ecs,sts]'
+	python -m pip install mypy_boto3_builder
+	python -m mypy_boto3_builder --installed --skip-services typings -d -s iam ec2 ecs sts
+
 lint: ## check style with flake8
 	flake8 cloud_bug tests
 
