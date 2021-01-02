@@ -1,5 +1,4 @@
 """Main module."""
-import http.client
 from string import Template
 import json
 import os
@@ -12,10 +11,8 @@ import urllib.request
 import platform
 import zipfile
 
-import botocore
-from mypy_boto3_ecs.type_defs import NetworkConfigurationTypeDef
-
 import boto3
+import botocore
 
 DEFAULT_IMAGE = 'aaaguirrep/offensive-docker'
 DOWNLOAD_BASE_URL = 'https://cloud-debug.amazonwebservices.com/release/metadata'  # 'darwin_amd64/1/latest-version'
@@ -216,30 +213,6 @@ class EcsService:
             'image': self.image,
             'task_name': self.service_name
         })
-
-# def default_cluster(sess: boto3.session.Session) -> str:
-#     ecs = sess.client('ecs')
-#     resp = ecs.describe_clusters(clusters=['default'])
-#     if len(resp['failures']) != 0:
-#         for failure in resp['failures']:
-#             raise UserWarning(json.dumps(failure))
-#
-#     if len(resp['clusters']) != 1:
-#         raise UserWarning('''
-# Could not find the default ECS cluster, try specifying one with --cluster or create it with:
-#     aws ecs create-cluster --name default
-# ''')
-#
-#     return resp['clusters'][0]['clusterArn']
-
-
-
-
-
-
-
-
-
 
 def fetch_executable(download_path, update=False) -> str:
     if not update or os.path.exists(download_path):
